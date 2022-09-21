@@ -1,7 +1,7 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config();
 
-const privateKeys = process.env.KOVAN_PRIVATE_KEYS || ""
+const privateKeys = process.env.GOERLI_PRIVATE_KEYS || ""
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
