@@ -5,18 +5,22 @@ const tokens = (n) => {
   return ethers.utils.parseUnits(n.toString(), "ether");
 };
 
+const etherVal = (n) => {
+  return ethers.utils.formatEther(n);
+};
+
 describe("Token", () => {
   let token, accounts, deployer, receiver, exchange;
 
-  const name = "Token";
-  const symbol = "TOKEN";
-  const decimals = "18";
-  const totalSupply = "1000000";
+  const name = "PeerSharePlace";
+  const symbol = "BLOCKS";
+  const decimals = 18;
+  const totalSupply = "1000000000";
 
   beforeEach(async () => {
     // Fetch token from blockchain
-    const Token = await ethers.getContractFactory("Token");
-    token = await Token.deploy(name, symbol, totalSupply);
+    const Token = await ethers.getContractFactory("PeerSharePlace");
+    token = await Token.deploy();
     accounts = await ethers.getSigners();
     deployer = accounts[0];
     receiver = accounts[1];
@@ -90,7 +94,7 @@ describe("Token", () => {
 
       it("rejects insufficient balances", async () => {
         // Transfer more tokens than deployer has - 100M
-        const invalidAmount = tokens(100000000);
+        const invalidAmount = tokens(10000000000);
         await expect(
           token.connect(deployer).transfer(receiver.address, invalidAmount)
         ).to.be.reverted;
@@ -132,6 +136,41 @@ describe("Token", () => {
         await expect(
           token.connect(deployer).approve(ethers.constants.AddressZero, amount)
         ).to.be.reverted;
+      });
+    });
+  });
+
+  describe("Adjusting Allowance", () => {
+    let amount, transaction, result, prevAllowance, allowance;
+
+    beforeEach(async () => {
+      amount = tokens(100);
+      prevAllowance = tokens(100);
+      transaction = await token
+        .connect(deployer)
+        .approve(exchange.address, prevAllowance);
+      result = await transaction.wait();
+    });
+    describe("Success", () => {
+      it("allowance is increased by correct amount", async () => {
+        await token.increaseAllowance(exchange.address, amount);
+        expect(
+          await token.allowance(deployer.address, exchange.address)
+        ).to.equal(prevAllowance.add(amount));
+      });
+
+      it("allowance is decreased by correct amount", async () => {
+        await token.decreaseAllowance(exchange.address, amount);
+        expect(
+          await token.allowance(deployer.address, exchange.address)
+        ).to.equal(prevAllowance.sub(amount));
+      });
+    });
+
+    describe("Failure", () => {
+      it("reverted due to negative allowance", async () => {
+        await expect(token.decreaseAllowance(exchange.address, tokens(110))).to
+          .be.reverted;
       });
     });
   });
