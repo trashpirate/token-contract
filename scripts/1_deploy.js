@@ -1,27 +1,33 @@
-
 const hre = require("hardhat");
 
 async function main() {
+  const name = "Token";
+  const symbol = "TOKEN";
+  const totalSupply = "1000000";
 
-    const name = "Token";
-    const symbol = "TOKEN";
-    const totalSupply = "1000000";
+  // get deployer address
+  const [deployer] = await ethers.getSigners();
+  console.log("Deploying contracts with the account:", deployer.address);
 
-    // fetch contract to deploy
-    const Token = await hre.ethers.getContractFactory("Token");
+  // check deployer account balance
+  const weiAmount = (await deployer.getBalance()).toString();
+  console.log("Account balance:", await ethers.utils.formatEther(weiAmount));
 
-    // deploy contract
-    const token = await Token.deploy(name, symbol, totalSupply);
+  // fetch contract to deploy
+  const Token = await hre.ethers.getContractFactory("Token");
 
-    // fetch deployed contract
-    await token.deployed();
+  // deploy contract
+  const token = await Token.deploy();
 
-    console.log(`Contract deployed to ${token.address}`);
+  // fetch deployed contract
+  await token.deployed();
+
+  console.log(`Contract deployed to ${token.address}`);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main().catch((error) => {
-    console.error(error);
-    process.exitCode = 1;
+  console.error(error);
+  process.exitCode = 1;
 });
