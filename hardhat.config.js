@@ -6,7 +6,15 @@ const privateKeys = process.env.PRIVATE_KEYS || "";
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  solidity: "0.8.17",
+  solidity: {
+    version: "0.8.17",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 1000,
+      },
+    },
+  },
   networks: {
     localhost: {},
     goerli: {
