@@ -49,6 +49,7 @@ module.exports = {
     currency: "USD",
     noColors: true,
     coinmarketcap: process.env.COIN_MARKETCAP_API_KEY || "",
+    // gasPriceApi: "https://api.bscscan.com/api?module=proxy&action=eth_gasPrice",
     token: "ETH",
   },
 };
