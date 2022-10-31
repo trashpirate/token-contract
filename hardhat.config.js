@@ -9,15 +9,7 @@ const privateKeys = process.env.PRIVATE_KEYS || "";
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: {
-    version: {
-      version: "0.8.17",
-      settings: {
-        optimizer: {
-          enabled: true,
-          runs: 200,
-        },
-      },
-    },
+    version: "0.8.17",
     settings: {
       optimizer: {
         enabled: true,
@@ -59,6 +51,7 @@ module.exports = {
     currency: "USD",
     noColors: true,
     coinmarketcap: process.env.COIN_MARKETCAP_API_KEY || "",
-    token: "ETH",
+    gasPriceApi: "https://api.bscscan.com/api?module=proxy&action=eth_gasPrice",
+    token: "BNB",
   },
 };
