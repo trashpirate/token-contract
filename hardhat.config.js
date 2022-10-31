@@ -26,12 +26,12 @@ module.exports = {
       accounts: privateKeys.split(","),
     },
   },
-  etherscan: {
-    // verification on Ethereum
-    apiKey: `${process.env.ETHERSCAN_API_KEY}`,
-  },
   // etherscan: {
-  //   // verification on Binance Smart Chain
-  //   apiKey: `${process.env.BSCSCAN_API_KEY}`,
+  //   // verification on Ethereum
+  //   apiKey: `${process.env.ETHERSCAN_API_KEY}`,
   // },
+  etherscan: {
+    // verification on Binance Smart Chain
+    apiKey: `${process.env.BSCSCAN_API_KEY}`,
+  },
 };

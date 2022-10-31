@@ -12,14 +12,14 @@ const etherVal = (n) => {
 describe("Token", () => {
   let token, accounts, deployer, receiver, exchange;
 
-  const name = "Token";
-  const symbol = "TOKEN";
+  const name = "PeerSharePlace";
+  const symbol = "BLOCK";
   const decimals = 18;
   const totalSupply = "1000000000";
 
   beforeEach(async () => {
     // Fetch token from blockchain
-    const Token = await ethers.getContractFactory("Token");
+    const Token = await ethers.getContractFactory("PeerSharePlace");
     token = await Token.deploy();
     accounts = await ethers.getSigners();
     deployer = accounts[0];

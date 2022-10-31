@@ -1,9 +1,8 @@
 const hre = require("hardhat");
 
 async function main() {
-  const name = "Token";
-  const symbol = "TOKEN";
-  const totalSupply = "1000000";
+  const name = "PeerSharePlace";
+  const symbol = "BLOCK";
 
   // get deployer address
   const [deployer] = await ethers.getSigners();
@@ -14,7 +13,7 @@ async function main() {
   console.log("Account balance:", await ethers.utils.formatEther(weiAmount));
 
   // fetch contract to deploy
-  const Token = await hre.ethers.getContractFactory("Token");
+  const Token = await hre.ethers.getContractFactory("PeerSharePlace");
 
   // deploy contract
   const token = await Token.deploy();
