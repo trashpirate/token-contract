@@ -1,5 +1,6 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("@nomiclabs/hardhat-etherscan");
+require("hardhat-gas-reporter");
 require("dotenv").config();
 
 const privateKeys = process.env.PRIVATE_KEYS || "";
@@ -11,7 +12,7 @@ module.exports = {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 1000,
+        runs: 200,
       },
     },
   },
@@ -41,5 +42,14 @@ module.exports = {
   etherscan: {
     // verification on Binance Smart Chain
     apiKey: `${process.env.BSCSCAN_API_KEY}`,
+  },
+
+  gasReporter: {
+    outputFile: "gas-report.txt",
+    enabled: process.env.REPORT_GAS !== undefined,
+    currency: "USD",
+    noColors: true,
+    coinmarketcap: process.env.COIN_MARKETCAP_API_KEY || "",
+    token: "ETH",
   },
 };
