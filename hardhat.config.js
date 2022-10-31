@@ -1,12 +1,21 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("@nomiclabs/hardhat-etherscan");
+require("hardhat-gas-reporter");
 require("dotenv").config();
 
 const privateKeys = process.env.PRIVATE_KEYS || "";
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  solidity: "0.8.17",
+  solidity: {
+    version: "0.8.17",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200,
+      },
+    },
+  },
   networks: {
     localhost: {},
     goerli: {
@@ -34,4 +43,12 @@ module.exports = {
   //   // verification on Binance Smart Chain
   //   apiKey: `${process.env.BSCSCAN_API_KEY}`,
   // },
+  gasReporter: {
+    outputFile: "gas-report.txt",
+    enabled: process.env.REPORT_GAS !== undefined,
+    currency: "USD",
+    noColors: true,
+    coinmarketcap: process.env.COIN_MARKETCAP_API_KEY || "",
+    token: "ETH",
+  },
 };
