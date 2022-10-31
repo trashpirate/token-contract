@@ -20,8 +20,21 @@ async function main() {
 
   // fetch deployed contract
   await token.deployed();
-
   console.log(`Contract deployed to ${token.address}`);
+
+  // wait for confirmations
+  console.log(`Waiting for confirmations...`);
+  const WAIT_BLOCK_CONFIRMATIONS = 6;
+  await token.deployTransaction.wait(WAIT_BLOCK_CONFIRMATIONS);
+  console.log(
+    `Contract confirmed with ${WAIT_BLOCK_CONFIRMATIONS} confirmations.`
+  );
+
+  console.log("Verifying contract on Etherscan...");
+  await hre.run("verify:verify", {
+    address: token.address,
+    // constructorArguments: [],
+  });
 }
 
 // We recommend this pattern to be able to use async/await everywhere

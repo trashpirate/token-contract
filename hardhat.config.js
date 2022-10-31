@@ -1,6 +1,7 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("@nomiclabs/hardhat-etherscan");
 require("hardhat-gas-reporter");
+require("hardhat-gas-reporter");
 require("dotenv").config();
 
 const privateKeys = process.env.PRIVATE_KEYS || "";
@@ -8,7 +9,15 @@ const privateKeys = process.env.PRIVATE_KEYS || "";
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: {
-    version: "0.8.17",
+    version: {
+      version: "0.8.17",
+      settings: {
+        optimizer: {
+          enabled: true,
+          runs: 200,
+        },
+      },
+    },
     settings: {
       optimizer: {
         enabled: true,
